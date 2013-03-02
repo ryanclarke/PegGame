@@ -28,16 +28,18 @@ namespace PegGame
         {
             if (IsValid)
             {
-                this.Left.IsFull = !(this.Left.IsFull);
-                this.Center.IsFull = false;
-                this.Right.IsFull = !(this.Right.IsFull);
+                this.Left.IsFull ^= true;
+                this.Center.IsFull ^= true;
+                this.Right.IsFull ^= true;
                 
                 if (Right.IsFull)
                 {
+                    //Console.WriteLine(this.Left.Number + " ---->> " + this.Right.Number);
                     path =  this.Left.Number + " > " + this.Right.Number;
                 }
                 else
                 {
+                    //Console.WriteLine(this.Right.Number + " ---->> " + this.Left.Number);
                     path =  this.Right.Number + " > " + this.Left.Number;
                 }
                 return true;
@@ -49,11 +51,20 @@ namespace PegGame
             }
         }
 
-        internal void ReverseJump()
+        internal void Reverse()
         {
-            this.Left.IsFull = !(this.Left.IsFull);
-            this.Center.IsFull = true;
-            this.Right.IsFull = !(this.Right.IsFull);
+            this.Left.IsFull ^= true;
+            this.Center.IsFull ^= true;
+            this.Right.IsFull ^= true;
+
+            if (Right.IsFull)
+            {
+                //Console.WriteLine(this.Right.Number + " <<---- " + this.Left.Number);
+            }
+            else
+            {
+                //Console.WriteLine(this.Left.Number + " <<---- " + this.Right.Number);
+            }
         }
     }
 }
