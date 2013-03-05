@@ -8,21 +8,21 @@
 
         internal bool IsValid
         {
-            get { return (Center.IsFull & (Left.IsFull ^ Right.IsFull)); }
+            get { return (Center.IsFull && (Left.IsFull ^ Right.IsFull)); }
         }
 
         internal Path(Hole left, Hole center, Hole right)
         {
-            this.Left = left;
-            this.Center = center;
-            this.Right = right;
+            Left = left;
+            Center = center;
+            Right = right;
         }
 
         private void InvertHoles()
         {
-                this.Left.IsFull ^= true;
-                this.Center.IsFull ^= true;
-                this.Right.IsFull ^= true;
+                Left.IsFull ^= true;
+                Center.IsFull ^= true;
+                Right.IsFull ^= true;
         }
 
         internal bool JumpIfValid(out string path)
@@ -33,11 +33,11 @@
 
                 if (Right.IsFull)
                 {
-                    path = this.Left.Name + " > " + this.Right.Name;
+                    path = Left.Name + " > " + Right.Name;
                 }
                 else
                 {
-                    path = this.Right.Name + " > " + this.Left.Name;
+                    path = Right.Name + " > " + Left.Name;
                 }
 
                 return true;

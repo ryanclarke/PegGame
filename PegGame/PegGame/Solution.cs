@@ -2,9 +2,8 @@
 {
     internal class Solution
     {
-        private bool UseRecursion { get; set; }
         private Board Board { get; set; }
-        private int CurrentJumpNumber { get; set; }
+        private int CurrentJump { get; set; }
         private int PathIndex { get; set; }
         private int[] PathIndexes { get; set; }
         private string[] Answer { get; set; }
@@ -12,14 +11,13 @@
 
         internal string[] Solve(Board board, bool useRecursion = true)
         {
-            UseRecursion = useRecursion;
             Board = board;
-            CurrentJumpNumber = 0;
+            CurrentJump = 0;
             PathIndex = 0;
             PathIndexes = new int[Board.Paths.Count - 1];
             Answer = new string[Board.Paths.Count - 3];
 
-            if (UseRecursion)
+            if (useRecursion)
             {
                 return RecursiveSolution();
             }
@@ -33,15 +31,16 @@
         {
             foreach (Path path in Board.Paths)
             {
-                if (path.JumpIfValid(out Answer[CurrentJumpNumber]))
+                if (path.JumpIfValid(out Answer[CurrentJump]))
                 {
-                    CurrentJumpNumber++;
+                    CurrentJump++;
                     Answer = RecursiveSolution();
 
                     if (string.IsNullOrEmpty(LastJumpInstruction))
                     {
-                        Answer[CurrentJumpNumber--] = string.Empty;
                         path.ReverseJump();
+                        Answer[CurrentJump] = string.Empty;
+                        CurrentJump--;
                     }
                     else
                     {
@@ -75,9 +74,9 @@
 
         private Path RecordJumpAndGoToNextMove(string instruction)
         {
-            Answer[CurrentJumpNumber] = instruction;
-            PathIndexes[CurrentJumpNumber] = PathIndex;
-            CurrentJumpNumber++;
+            Answer[CurrentJump] = instruction;
+            PathIndexes[CurrentJump] = PathIndex;
+            CurrentJump++;
             
             Path path = Board.Paths[PathIndex];
             PathIndex = 0;
@@ -89,17 +88,17 @@
         {
             while (PathIndex >= Board.Paths.Count - 1)
             {
-                Answer[CurrentJumpNumber] = string.Empty;
-                PathIndexes[CurrentJumpNumber] = 0;
+                Answer[CurrentJump] = string.Empty;
+                PathIndexes[CurrentJump] = 0;
 
-                CurrentJumpNumber--;
+                CurrentJump--;
 
-                PathIndex = PathIndexes[CurrentJumpNumber];
+                PathIndex = PathIndexes[CurrentJump];
                 path = Board.Paths[PathIndex];
                 path.ReverseJump();
 
-                Answer[CurrentJumpNumber] = string.Empty;
-                PathIndexes[CurrentJumpNumber] = 0;
+                Answer[CurrentJump] = string.Empty;
+                PathIndexes[CurrentJump] = 0;
             }
             return path;
         }
