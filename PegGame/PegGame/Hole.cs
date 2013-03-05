@@ -1,19 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace PegGame
+﻿namespace PegGame
 {
     internal class Hole
     {
-        internal string Number { get; set; }
+        internal int Number { get; set; }
+        internal string Name { get; set; }
         internal bool IsFull { get; set; }
 
-        internal Hole(int number, bool isFull)
+        internal Hole(int number, bool isFull = true)
         {
-            this.Number = number.ToString("00");
+            this.Number = number;
+            this.Name = number.ToString("00");
             this.IsFull = isFull;
         }
     }

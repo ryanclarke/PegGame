@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace PegGame
+﻿namespace PegGame
 {
     internal class Path
     {
@@ -24,24 +18,28 @@ namespace PegGame
             this.Right = right;
         }
 
+        private void InvertHoles()
+        {
+                this.Left.IsFull ^= true;
+                this.Center.IsFull ^= true;
+                this.Right.IsFull ^= true;
+        }
+
         internal bool JumpIfValid(out string path)
         {
             if (IsValid)
             {
-                this.Left.IsFull ^= true;
-                this.Center.IsFull ^= true;
-                this.Right.IsFull ^= true;
-                
+                InvertHoles();
+
                 if (Right.IsFull)
                 {
-                    //Console.WriteLine(this.Left.Number + " ---->> " + this.Right.Number);
-                    path =  this.Left.Number + " > " + this.Right.Number;
+                    path = this.Left.Name + " > " + this.Right.Name;
                 }
                 else
                 {
-                    //Console.WriteLine(this.Right.Number + " ---->> " + this.Left.Number);
-                    path =  this.Right.Number + " > " + this.Left.Number;
+                    path = this.Right.Name + " > " + this.Left.Name;
                 }
+
                 return true;
             }
             else
@@ -51,20 +49,9 @@ namespace PegGame
             }
         }
 
-        internal void Reverse()
+        internal void ReverseJump()
         {
-            this.Left.IsFull ^= true;
-            this.Center.IsFull ^= true;
-            this.Right.IsFull ^= true;
-
-            if (Right.IsFull)
-            {
-                //Console.WriteLine(this.Right.Number + " <<---- " + this.Left.Number);
-            }
-            else
-            {
-                //Console.WriteLine(this.Left.Number + " <<---- " + this.Right.Number);
-            }
+            InvertHoles();
         }
     }
 }

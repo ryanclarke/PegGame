@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("PegGame")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("PegCracker")]
+[assembly: AssemblyDescription("Solve Peg Solitaire")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("ryanclarke.net")]
 [assembly: AssemblyProduct("PegGame")]
-[assembly: AssemblyCopyright("Copyright ©  2013")]
+[assembly: AssemblyCopyright("Copyright © Ryan Clarke 2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

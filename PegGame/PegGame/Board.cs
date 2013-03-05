@@ -1,31 +1,53 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace PegGame
 {
-    internal static class Board
+    internal class Board
     {
-        internal static List<Path> Create(int emptyHole)
+        private const int NUMBER_OF_HOLES = 15;
+
+        internal List<Hole> Holes { get; set; }
+        internal List<Path> Paths { get; set; }
+
+        internal Board()
         {
-            var hole = new Dictionary<int, Hole>();
-            for (int i = 1; i <= 15; i++)
+            this.Holes = CreateHoles();
+            this.Paths = CreatePaths();
+        }
+
+        internal void SetBoard(int emptyHole)
+        {
+            foreach (var hole in this.Holes)
             {
-                hole.Add(i, new Hole(i, (i != emptyHole)));
+               hole.IsFull = (hole.Number != emptyHole);
+            }
+        }
+
+        private List<Hole> CreateHoles()
+        {
+            var holes = new List<Hole>();
+            
+            for (int i = 1; i <= NUMBER_OF_HOLES; i++)
+            {
+                holes.Add(new Hole(i));
             }
 
+            return holes;
+        }
+
+        private List<Path> CreatePaths()
+        {
             var paths = new List<Path>();
+            
             foreach (var path in TemplateOfPaths())
             {
-                paths.Add(new Path(hole[path[0]], hole[path[1]], hole[path[2]]));
+                paths.Add(new Path(Holes[path[0]-1], Holes[path[1]-1], Holes[path[2]-1]));
             }
 
             return paths;
         }
 
-        internal static List<int[]> TemplateOfPaths()
+        private List<int[]> TemplateOfPaths()
         {
             var template = new List<int[]>();
 
